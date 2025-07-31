@@ -1,11 +1,21 @@
 package com.github.xltgui.escalaigreja.web;
 
+import com.github.xltgui.escalaigreja.api.LiturgicalServerRequest;
 import com.github.xltgui.escalaigreja.api.LiturgicalServerResponse;
-import com.github.xltgui.escalaigreja.model.liturgicalServers.LiturgicalServer;
-import org.springframework.stereotype.Component;
-@Component
-public class LiturgicalServerMapper {
-    public LiturgicalServerResponse toResponse(LiturgicalServer server) {
-        return new LiturgicalServerResponse(server.getName(), server.getAge(), server.getRole());
-    }
+import com.github.xltgui.escalaigreja.domain.liturgicalServer.LiturgicalServer;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface LiturgicalServerMapper {
+
+
+    LiturgicalServer toEntity(LiturgicalServerRequest dto);
+
+    LiturgicalServerResponse toDto(LiturgicalServer entity);
+
+    List<LiturgicalServerResponse> toDtoList(List<LiturgicalServer> entityList);
 }

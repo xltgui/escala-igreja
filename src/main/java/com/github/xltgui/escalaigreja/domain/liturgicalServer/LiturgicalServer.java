@@ -1,6 +1,6 @@
-package com.github.xltgui.escalaigreja.model.liturgicalServers;
+package com.github.xltgui.escalaigreja.domain.liturgicalServer;
 
-import com.github.xltgui.escalaigreja.model.schedule.Schedule;
+import com.github.xltgui.escalaigreja.domain.schedule.Schedule;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
