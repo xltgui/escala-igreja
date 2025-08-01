@@ -1,12 +1,10 @@
 package com.github.xltgui.escalaigreja.domain.schedule;
 
-import com.github.xltgui.escalaigreja.domain.liturgicalServer.LiturgicalServer;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,15 +19,8 @@ public class Schedule {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "MONTH")
-    private Month month;
+    private MonthPt monthPt;
 
     private LocalDate date;
     private LocalTime time;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "DUTY")
-    private LiturgicalServersDuty duty;
-
-    @OneToMany
-    private List<LiturgicalServer> servers;
 }

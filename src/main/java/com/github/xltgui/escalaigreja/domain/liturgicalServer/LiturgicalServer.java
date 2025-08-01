@@ -21,9 +21,6 @@ public class LiturgicalServer {
     @Column(name = "ROLE")
     private LiturgicalServersRole role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Schedule schedule;
-
     public LiturgicalServer(Long id, String name, int age, LiturgicalServersRole role) {
         this.id = id;
         this.name = name;
