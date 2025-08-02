@@ -13,7 +13,6 @@ public class LiturgicalServerService {
     private final LiturgicalServersRepository repository;
 
     public LiturgicalServer create(LiturgicalServer server) {
-        System.out.println("REQUEST=" + server);
         var createdServer = new LiturgicalServer(null, server.getName(), server.getAge(), server.getRole());
         return repository.save(createdServer);
     }
