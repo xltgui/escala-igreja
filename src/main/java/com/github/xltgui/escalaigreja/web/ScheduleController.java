@@ -29,18 +29,16 @@ public class ScheduleController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ScheduleRowDto>> list(ScheduleRequestParams params, @PageableDefault Pageable pageable) {
+    public ResponseEntity<List<ScheduleRowDto>> list(ScheduleRequestParams params, @PageableDefault(size = 20, sort = "id") Pageable pageable) {
         List<ScheduleRowDto> rows = scheduleService.list(params, pageable);
         return ResponseEntity.ok().body(rows);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleRowDto> findByMonth(@PathVariable("id") Long scheduleId) {
+    public ResponseEntity<ScheduleRowDto> findById(@PathVariable("id") Long scheduleId) {
         ScheduleRowDto response = scheduleService.findById(scheduleId);
         return ResponseEntity.ok().body(response);
     }
-
-
 
     @PutMapping("{scheduleId}")
     public ResponseEntity<?> update(@PathVariable("scheduleId") long scheduleId, @Valid @RequestBody ScheduleCreationRequest request) {
