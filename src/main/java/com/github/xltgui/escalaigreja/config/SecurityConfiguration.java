@@ -1,9 +1,12 @@
 package com.github.xltgui.escalaigreja.config;
 
+import com.github.xltgui.escalaigreja.domain.user.UserService;
+import com.github.xltgui.escalaigreja.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +21,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
 
     @Bean
@@ -27,9 +31,6 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/liturgical-servers/**").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET,"/schedule").permitAll();
-                    authorize.requestMatchers(HttpMethod.POST,"/schedule").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 })
                 .build();
@@ -41,8 +42,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user1 = User.builder()
+    public UserDetailsService userDetailsService(UserService userService) {
+        /*UserDetails user1 = User.builder()
                 .username("user")
                 .password(encoder.encode("123"))
                 .roles("USER")
@@ -52,8 +53,8 @@ public class SecurityConfiguration {
                 .username("admin")
                 .password(encoder.encode("123"))
                 .roles("ADMIN")
-                .build();
+                .build();*/
 
-        return new InMemoryUserDetailsManager(user1, user2);
+        return new CustomUserDetailsService(userService);
     }
 }
