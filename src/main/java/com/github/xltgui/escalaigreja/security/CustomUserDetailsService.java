@@ -16,6 +16,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         UserEntity userEntity = service.findByUsername(username);
 
+        System.out.println("aJUSTANDO LOGINS");
+
         return User.
                 builder()
                 .username(username)
