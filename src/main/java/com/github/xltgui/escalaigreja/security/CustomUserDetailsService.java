@@ -15,7 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserEntity userEntity = service.findByUsername(username);
-
+        System.out.println("USER");
         return User.
                 builder()
                 .username(username)
