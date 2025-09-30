@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -19,6 +21,12 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> save(@RequestBody UserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(userService.save(mapper.toEntity(request))));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> listAll() {
+        return ResponseEntity.ok().body(mapper.toDtoList(userService.findAll()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

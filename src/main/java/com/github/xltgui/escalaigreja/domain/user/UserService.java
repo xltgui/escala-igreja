@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,6 +22,10 @@ public class UserService {
     public UserEntity findByUsername(String username) {
         return repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this email"));
+    }
+
+    public List<UserEntity> findAll() {
+        return repository.findAll();
     }
 
     public void delete(Long id) {

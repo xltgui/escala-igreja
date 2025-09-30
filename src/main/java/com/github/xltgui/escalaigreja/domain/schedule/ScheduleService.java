@@ -52,6 +52,37 @@ public class ScheduleService {
         });
     }
 
+    public void createMonthlySchedule(String yearMonth, List<ScheduleCreationRequest> request) {
+        List<Schedule> schedules = new ArrayList<>();
+        List<ScheduleAssignment> scheduleAssignments = new ArrayList<>();
+
+        for(ScheduleCreationRequest scheduleRequest : request) {
+            scheduleValidator.valid(scheduleRequest);
+
+            Schedule schedule = new Schedule();
+            schedule.setDate(scheduleRequest.date());
+            schedule.setTime(scheduleRequest.time());
+            schedule.setDay(WeekDay.toPortuguese(scheduleRequest.date().getDayOfWeek()));
+            schedule.setMonthPt(MonthPt.toPortuguese(scheduleRequest.date().getMonth()));
+            schedules.add(schedule);
+
+
+            scheduleRequest.assignments().forEach(assignment -> {
+                LiturgicalServer server =  liturgicalServersRepository.findById(assignment.serverId())
+                        .orElseThrow(() -> new RuntimeException("Liturgal Server Not Found with this ID"));
+
+                ScheduleAssignment scheduleAssignment = new ScheduleAssignment();
+                scheduleAssignment.setServer(server);
+                scheduleAssignment.setSchedule(schedule);
+                scheduleAssignment.setDuty(assignment.duty());
+                scheduleAssignments.add(scheduleAssignment);
+            });
+
+        }
+        scheduleRepository.saveAll(schedules);
+        scheduleAssignmentRepository.saveAll(scheduleAssignments);
+    }
+
     public List<ScheduleRowDto> list(ScheduleRequestParams params, Pageable pageable) {
         List<ScheduleRowDto> rows = new ArrayList<>();
         Map<String, String> assignmentsRow = new HashMap<>();
