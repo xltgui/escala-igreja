@@ -32,7 +32,8 @@ public class LiturgicalServerController {
 
     @PutMapping({"{id}"})
     public ResponseEntity<?> update(@Valid @RequestBody LiturgicalServerRequest request, @PathVariable Long id){
-        liturgicalServerService.update(mapper.toEntity(request));
+        System.out.println("REQ=" + request);
+        liturgicalServerService.update(mapper.toEntity(request), id);
         return ResponseEntity.noContent().build();
     }
 

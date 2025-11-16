@@ -21,10 +21,14 @@ public class LiturgicalServerService {
         return repository.findAllByOrderByRoleAsc();
     }
 
-    public void update(LiturgicalServer server) {
-        if(server.getId() == null){
-            throw new IllegalArgumentException("null id");
-        }
-        repository.save(server);
+    public void update(LiturgicalServer server, Long id) {
+        var existingServer = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Liturgical server not found with id: " + id));
+
+        existingServer.setName(server.getName());
+        existingServer.setAge(server.getAge());
+        existingServer.setRole(server.getRole());
+
+        repository.save(existingServer);
     }
 }

@@ -13,3 +13,17 @@ spring:
       ddl-auto: update
 
 
+    security:
+      jwt:
+        secret-key: "c3VwZXJTZWNyZXRLZXlGb3JKV1RDb21NdW5pY2F0aW9uV2l0aDI1NkJpdHM="
+        expiration: 86400000
+
+  logging:
+    level:
+      com.github.xltgui.escalaigreja: DEBUG
+      org.springframework.security: DEBUG
+
+api:
+  security:
+    token:
+      secret: mysecret
