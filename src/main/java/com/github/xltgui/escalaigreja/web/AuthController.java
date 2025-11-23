@@ -39,6 +39,6 @@ public class AuthController {
         String token = tokenService.generateToken(userEntity);
 
         // 5. Retorna o Token JWT encapsulado no DTO de resposta.
-        return ResponseEntity.ok(new LoginResponse(token));
+        return ResponseEntity.ok(new LoginResponse(token, userMapper.toDtoLogin(userEntity)));
     }
 }

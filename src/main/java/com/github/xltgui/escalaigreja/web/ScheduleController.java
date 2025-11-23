@@ -24,14 +24,12 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ScheduleCreationRequest request) {
         scheduleService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/monthly/{yearMonth}")
     public ResponseEntity<?> createMonthly(@PathVariable String yearMonth, @Valid @RequestBody List<ScheduleCreationRequest> request) {
         scheduleService.createMonthlySchedule(yearMonth ,request);
@@ -44,21 +42,18 @@ public class ScheduleController {
         return ResponseEntity.ok().body(rows);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleRowDto> findById(@PathVariable("id") Long scheduleId) {
         ScheduleRowDto response = scheduleService.findById(scheduleId);
         return ResponseEntity.ok().body(response);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{scheduleId}")
     public ResponseEntity<?> update(@PathVariable("scheduleId") long scheduleId, @Valid @RequestBody ScheduleCreationRequest request) {
         scheduleService.update(request, scheduleId);
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long scheduleId) {
         scheduleService.delete(scheduleId);

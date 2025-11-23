@@ -32,7 +32,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+//@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
 
     private final UserService userService;
@@ -52,6 +52,8 @@ public class SecurityConfiguration {
 
                     // Permite que qualquer um crie um usuário (se esta for a sua regra de negócio)
                     authorize.requestMatchers(HttpMethod.POST, "/users").permitAll();
+
+                    authorize.requestMatchers(HttpMethod.GET, "/schedule").authenticated();
 
                     // Todas as outras requisições devem ser autenticadas
                     authorize.anyRequest().authenticated();

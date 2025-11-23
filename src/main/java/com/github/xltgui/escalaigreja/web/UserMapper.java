@@ -1,5 +1,6 @@
 package com.github.xltgui.escalaigreja.web;
 
+import com.github.xltgui.escalaigreja.api.login.UserLoginResponse;
 import com.github.xltgui.escalaigreja.api.user.UserRequest;
 import com.github.xltgui.escalaigreja.api.user.UserResponse;
 import com.github.xltgui.escalaigreja.domain.user.UserEntity;
@@ -13,6 +14,8 @@ public interface UserMapper {
     UserEntity toEntity(UserRequest userRequest);
 
     UserResponse toDto(UserEntity userEntity);
+
+    UserLoginResponse toDtoLogin(UserEntity userEntity);
 
     List<UserResponse> toDtoList(List<UserEntity> userEntityList);
 }
